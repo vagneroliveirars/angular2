@@ -7,6 +7,12 @@ export class Animal {
     }
     
     public mover(distanciaEmMetros: number): void {
-        console.log(`${this.nome} moveu ${distanciaEmMetros}m.`);
+        //console.log(`${this.nome} moveu ${distanciaEmMetros}m.`);
+        console.log(this.nome + ' moveu ' + distanciaEmMetros + 'm');
     }
+    
+    public getNome() {
+        return this.nome;
+    }
+    
 }
