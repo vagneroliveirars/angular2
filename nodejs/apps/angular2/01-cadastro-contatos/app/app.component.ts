@@ -5,8 +5,7 @@ import { Component } from '@angular/core';
     template: `
         <h1>My First Angular 2 App</h1>
         
-        <button class="btn btn-success">Hello Bootstrap</button>`
-        
+        <contatos-lista></contatos-lista>`
 })
 export class AppComponent {
     
