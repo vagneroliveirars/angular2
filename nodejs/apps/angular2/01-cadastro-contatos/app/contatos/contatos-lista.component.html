@@ -14,10 +14,10 @@
 				</thead>
 				
 				<tbody>
-					<tr>
-						<th>Fulano de tal</th>
-						<th>fulano@email.com</th>
-						<th>(00) 0000-0000</th>
+					<tr *ngFor="let c of contatos">
+						<th>{{ c.nome }}</th>
+						<th>{{ c.email }}</th>
+						<th>{{ c.telefone }}</th>
 						<th><button class="btn btn-danger">Deletar</button></th>
 					</tr>
 				</tbody>
