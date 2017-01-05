@@ -26,12 +26,12 @@ export class ContatoDetalheComponent implements OnInit {
         this.route.params.forEach((params: Params) => {
             let id: number = +params['id'];
 
-            console.log(id);
-
-            this.contatoService.getContato(id)
+            if (id) {
+                this.contatoService.getContato(id)
                 .then((contato: Contato) => {
                     this.contato = contato;
                 });
+            }                        
         });      
     }
 
