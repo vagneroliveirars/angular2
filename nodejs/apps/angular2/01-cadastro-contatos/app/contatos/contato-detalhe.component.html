@@ -15,7 +15,7 @@
 		</div>
 		
 		<div [ngClass]="getFormGroupClass(email.valid, email.pristine)">
-			<label for="email">Email</label>
+			<label for="email" class="form-control-label">Email</label>
 			<input type="email" placeholder="Insira o email"
 				[ngClass]="getFormControlClass(email.valid, email.pristine)"
 				required
@@ -26,7 +26,7 @@
 		</div>
 		
 		<div [ngClass]="getFormGroupClass(telefone.valid, telefone.pristine)">
-			<label for="telefone">Telefone</label>
+			<label for="telefone" class="form-control-label">Telefone</label>
 			<input type="text" placeholder="Insira o telefone"
 				[ngClass]="getFormControlClass(telefone.valid, telefone.pristine)"
 				required
