@@ -20,7 +20,13 @@ export class ContatoService {
         */ 
         return this.http.get(this.contatosUrl)
         .toPromise()
-        .then(response => response.json().data as Contato[]);
+        .then(response => response.json().data as Contato[])
+        .catch(this.handleError);
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.log('Error: ', error);
+        return Promise.reject(error.message || error);
     }
 
     getContato(id: number): Promise<Contato> {
