@@ -55,11 +55,16 @@ export class ContatoDetalheComponent implements OnInit {
     }
 
     onSubmit(): void {
+        let promise;
+
         if (this.isNew) {
             console.log('Cadastrar contato');
+            promise = this.contatoService.create(this.contato);
         } else {
             console.log('Alterar contato');
         }
+
+        promise.then(contato => this.location.back());
     }
 
 }

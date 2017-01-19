@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -10,6 +10,7 @@ import { CONTATOS } from './contatos-mock';
 export class ContatoService {
 
     private contatosUrl: string = 'app/contatos';
+    private headers: Headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {}
 
@@ -19,9 +20,16 @@ export class ContatoService {
         / http.get (API mockada) em uma Promise
         */ 
         return this.http.get(this.contatosUrl)
-        .toPromise()
-        .then(response => response.json().data as Contato[])
-        .catch(this.handleError);
+            .toPromise()
+            .then(response => response.json().data as Contato[])
+            .catch(this.handleError);
+    }
+
+    create(contato: Contato): Promise<Contato> {
+        return this.http.post(this.contatosUrl, JSON.stringify(contato), {headers: this.headers})
+            .toPromise()
+            .then((response: Response) => response.json().data as Contato)            
+            .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {
