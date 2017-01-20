@@ -34,7 +34,7 @@ export class ContatosListaComponent implements OnInit {
                     this.contatoService
                         .delete(contato)
                         .then(() => {
-                            // Remove o contato deletado da lista de contatos
+                            // Remove o contato da lista de contatos
                             this.contatos = this.contatos.filter((c : Contato) => c.id != contato.id);
                         }).catch(error => {
                             console.log(error);
