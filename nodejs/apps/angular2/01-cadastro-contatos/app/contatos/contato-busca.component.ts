@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnChanges, Output, Input, SimpleChanges, SimpleChange } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ContatoService } from './contato.service';
 import { Contato } from './contato.model';
@@ -9,10 +10,21 @@ import { Subject } from 'rxjs/Subject';
 @Component({
     moduleId: module.id,
     selector: 'contato-busca',
-    templateUrl: 'contato-busca.component.html'
+    templateUrl: 'contato-busca.component.html',
+    styles: [`
+        .cursor-pointer:hover {
+            cursor: pointer;
+        }
+    `]
 })
-export class ContatoBuscaComponent implements OnInit {
+export class ContatoBuscaComponent implements OnInit, OnChanges {
     
+    // Input property exposto para enviar informações para o componente
+    @Input() busca: string;
+    
+    // Emissor de eventos exposto como output property para o componente
+    @Output() buscaChange: EventEmitter<string> = new EventEmitter<string>();
+
     contatos: Observable<Contato[]>;
     
     /*
@@ -23,7 +35,8 @@ export class ContatoBuscaComponent implements OnInit {
     private termosDaBusca: Subject<string> = new Subject<string>();
     
     constructor(
-        private contatoService: ContatoService
+        private contatoService: ContatoService,
+        private router: Router
     ) { }
 
     ngOnInit(): void { 
@@ -42,9 +55,25 @@ export class ContatoBuscaComponent implements OnInit {
             });       
     }
 
+    /**
+     * OnChanges escuta as alterações nos atributos do componente decorados com @Input()
+     */
+    ngOnChanges(changes: SimpleChanges): void {
+        let busca: SimpleChange = changes['busca'];
+        this.search(busca.currentValue);
+    }
+
     search(termo: string): void {
         // Adiciona o termo da busca no Subject                
         this.termosDaBusca.next(termo);
+
+        // Emite o evento
+        this.buscaChange.emit(termo);
+    }
+
+    verDetalhe(contato: Contato): void {
+        let link = ['contato/save', contato.id];
+        this.router.navigate(link);
     }
 
 }
