@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/toPromise';
 
 import { Contato } from './contato.model';
@@ -70,4 +71,11 @@ export class ContatoService {
             setTimeout(resolve, 6000);
         }).then(() => this.getContatos());
     }
+
+    search(termo: string): Observable<Contato[]> {
+        return this.http
+            .get(`${this.contatosUrl}/?nome=${termo}`)
+            .map((res: Response) => res.json().data as Contato[]); // Converte o Response retornado em um json como array de contatos
+    }
+
 }
