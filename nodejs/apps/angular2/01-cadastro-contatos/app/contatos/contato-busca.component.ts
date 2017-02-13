@@ -22,7 +22,10 @@ export class ContatoBuscaComponent implements OnInit, OnChanges {
     // Input property exposto para enviar informações para o componente
     @Input() busca: string;
     
-    // Emissor de eventos exposto como output property para o componente
+    /**
+     * Emissor de eventos exposto como output property para o componente.
+     * Padrão change é usado para fazer um two-way data-binding
+     */ 
     @Output() buscaChange: EventEmitter<string> = new EventEmitter<string>();
 
     contatos: Observable<Contato[]>;
@@ -74,6 +77,9 @@ export class ContatoBuscaComponent implements OnInit, OnChanges {
     verDetalhe(contato: Contato): void {
         let link = ['contato/save', contato.id];
         this.router.navigate(link);
+        
+        // Emite o evento de uma string vazia para resetar a busca
+        this.buscaChange.emit('');
     }
 
 }
