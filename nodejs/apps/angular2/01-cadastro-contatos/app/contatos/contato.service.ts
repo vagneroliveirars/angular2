@@ -6,16 +6,17 @@ import 'rxjs/add/operator/toPromise';
 
 import { Contato } from './contato.model';
 import { CONTATOS } from './contatos-mock';
+import { ServiceInterface } from './../interfaces/service.interface';
 
 @Injectable()
-export class ContatoService {
+export class ContatoService implements ServiceInterface<Contato> {
 
     private contatosUrl: string = 'app/contatos';
     private headers: Headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {}
 
-    getContatos(): Promise<Contato[]> {
+    findAll(): Promise<Contato[]> {
         /*
         / toPromise converte o Observable retornado pelo 
         / http.get (API mockada) em uma Promise
@@ -61,15 +62,15 @@ export class ContatoService {
         return Promise.reject(error.message || error);
     }
 
-    getContato(id: number): Promise<Contato> {
-        return this.getContatos()
+    find(id: number): Promise<Contato> {
+        return this.findAll()
             .then((contatos: Contato[]) => contatos.find(contato => contato.id === id));
     }
 
     getContatosSlowly(): Promise<Contato[]> {
         return new Promise((resolve, reject) => {
             setTimeout(resolve, 6000);
-        }).then(() => this.getContatos());
+        }).then(() => this.findAll());
     }
 
     search(termo: string): Observable<Contato[]> {

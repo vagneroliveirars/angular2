@@ -25,7 +25,7 @@ export class ContatosListaComponent implements OnInit {
      */
     ngOnInit(): void {
         // Chama o serviço que retorna a lista de contatos
-        this.contatoService.getContatos()
+        this.contatoService.findAll()
             .then((contatos: Contato[]) => {
                 this.contatos = contatos;
             }).catch(err => {
